@@ -1,157 +1,135 @@
 %! TeX root: ../mpolytope.tex
 
 \begin{frame}
-\frametitle{Agenda} \textbf{Plan for today:} 
-\begin{itemize}
-	\item Quick review of linear programming \& polytopes
-	\item Fundamentals of matching theory
-	\item The perfect matching polytope
-		\begin{itemize}
-			\item Bipartite graphs
-			\item General graphs
-			\item Cubic graphs
-		\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
 \begin{center}
-	\Large \textbf{Linear Programming \& Polytopes}
+\Large \textbf{The Perfect Matching Polytope} 
 \end{center}
 \end{frame}
 
 \begin{frame}
-\frametitle{Linear Programming}
-The goal of \textbf{linear programming} is to maximize (or minimize) a linear objective function subject to a collection of linear constraints. \\
+\frametitle{Preliminaries}
+Let \( G = (V,E) \). We will work in the vector space \( \mathbb{R}^{E} \coloneqq \mathbb{R}^{|E|}  \).
+\begin{itemize}
+	\item Vectors in \( \mathbb{R}^{E}  \) have components indexed by \( E \).
+	\item E.g. \( x = (x(e) : e \in E) \in \mathbb{R}^{E} \)
+\end{itemize}
 \vspace{0.3cm}
-For example:
+As such, each component of a vector in \( \mathbb{R}^{E}  \) contains information about an edge \( e \in E \).
+\begin{itemize}
+	\item E.g. If \( F \subseteq E \), define \( \chi_{F} \in \mathbb{R}^{E}  \) by \( \chi_{F}(e) = 1  \) if \( e \in M \) and \( \chi_{F} (e) = 0 \) otherwise.
+\end{itemize}
+\vspace{0.3cm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Preliminaries}
+We must cover one final preliminary: \\
+\vspace{0.3cm}
+Given \( x \in \mathbb{R}^{E}  \) and \( F \subseteq E \), define \[ x(F) \coloneqq x \cdot \chi_{F} = \sum_{e \in F}^{} x(e) .  \]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+Let \( \mathcal{M}_{G}  \) denote the collection of perfect matchings of \( G \). Then, we define the \textbf{perfect matching polytope} \( \mathcal{P} \mathcal{M}  (G) \) of \( G \) by \[ \mathcal{P} \mathcal{M} (G) \coloneqq \operatorname{conv} (\{ \chi_{M} \in \mathbb{R}^{E} : M \in \mathcal{M} _{G}  \} ), \] where \( \operatorname{conv} (A) \) is the smallest convex set containing \( A \subseteq \mathbb{R}^{E}  \).
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+The set \( \mathcal{P} \mathcal{M} (G) = \operatorname{conv} (\{ \chi_{M} \in \mathbb{R}^{E} : M \in \mathcal{M} _{G}  \} ) \) doesn't seem to help us investigate the perfect matchings in \( G \).
+\begin{itemize}
+	\item<2-> By definition, \( \mathcal{P} \mathcal{M} (G) \) is a polytope, so it would be really nice if we could \emph{find a linear program} whose optimum occurs at one of its corners. 
+	\item<3> Let's do that now!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 1:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(e) \geq 0 \) for every \( e \in E \).}
+\begin{proof}
+	We may write \( x \) as a convex combination of characteristic vectors of perfect matchings in \( G \): \[ x = \lambda_1 \chi_{M_1} + \lambda_2 \chi_{M_2} + \cdots + \lambda_{n} \chi_{M_{n} } . \] Since \( \lambda_{j} \in [0, 1] \) and \( \chi_{M_{j} } \geq 0 \) for each \( j \in [n] \), it follows that \( x \) has non-negative components.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 2:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(\delta (v)) = 1 \) for all \( v \in V \).}\\
+(\emph{note: \( \delta (v) \) is the set of all edges containing \( v \) as an end})
+\begin{proof}
+Again, write \( x = \sum_{j=1}^{n} \lambda_{j} \chi_{M_{j} }  \) as a convex combination. Then
 \begin{align*}
-\text{maximize} \quad &z = 5x_1 + 3x_2 - 7x_3 \\
-\text{subject to} \quad & x_1 + x_2 + x_3 \leq 12 \\
-& 4x_1 + 5x_3 \leq 50 \\
-& x_1, x_2, x_3 \geq 0
+	x(\delta (v)) &= \sum_{e \in \delta (v)}^{} x(e) = \sum_{e \in \delta (v)}^{} \sum_{j=1}^{n} \lambda_{j} \chi_{M_{j} } (e) \\
+		      &= \sum_{j=1}^{n} \sum_{e \in \delta (v)}^{} \lambda_{j} \chi_{M_{j} } (e) = \sum_{j=1}^{n} \lambda_{j} = 1,
 \end{align*}
+since each \( M_{j}  \) is a perfect matching.
+\end{proof}
 \end{frame}
 
 \begin{frame}
-\frametitle{Linear Programming}
-The goal of \textbf{linear programming} is to maximize (or minimize) a linear objective function subject to a collection of linear constraints. \\
-\vspace{0.3cm}
-
-We can express this compactly using matrices:
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 1:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(e) \geq 0 \) for every \( e \in E \).} \\
+\vspace{0.1cm}
+\textbf{Observation 2:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(\delta (v)) = 1 \) for all \( v \in V \).}\\
+\vspace{0.5cm}
+Observations 1 and 2 can be written compactly as the following: \\
+\vspace{0.1cm}
+\textbf{Observtion 3:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x \geq 0 \) and \( Ax = 1 \), where \( A = (a_{ve})_{v \in V, e \in E}  \) is the incidence matrix of \( G \).}
 \begin{itemize}
-	\item Goal: Find a vector \( x \) such that \( c^{T} x \) is maximized and \( x \) satisfies the constraints \( A x \leq b \) and \( x \geq 0 \).
-	\item (\( x, c \in \mathbb{R}^{n}  \), \( A \in \mathbb{R}^{m \times n} \), and \( b \in \mathbb{R}^{m}  \))
+	\item<2> \emph{This is really starting to look like a linear program...} 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{The Dual of an LP}
-
-    Given a linear program in standard form:
-    \begin{align*}
-        \text{maximize} \quad & c^T x \\
-        \text{subject to} \quad & Ax \leq b \\
-                                & x \geq 0.
-    \end{align*}
-
-    The dual LP is formulated as:
-    \begin{align*}
-        \text{minimize} \quad & b^T y \\
-        \text{subject to} \quad & A^T y \geq c \\
-                                & y \geq 0.
-    \end{align*}
-\end{frame}
-
-\begin{frame}
-\frametitle{The Dual of an LP}
-The primal and dual LPs provide bounds on each other’s optimal values. If an LP has an optimum at \(x = \hat{x}  \), then its dual also has this optimum (Strong duality theorem).
-\end{frame}
-
-\begin{frame}
-\frametitle{Polytopes}
-A \textbf{polytope} is the convex hull of a finite collection of vectors.
-\end{frame}
-
-\begin{frame}
-\frametitle{Polytopes}
-\begin{figure}
-        \centering
-        \begin{minipage}{0.32\textwidth}
-            \centering
-            \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/convexhull.png}
-        \end{minipage}\hfill
-        \begin{minipage}{0.32\textwidth}
-            \centering
-            \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/convex-polytope.png}
-        \end{minipage}\hfill
-        \begin{minipage}{0.32\textwidth}
-            \centering
-            \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/600cell.png}
-        \end{minipage}
-\end{figure}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-\Large How are polytopes related to LP?
-\end{center}
-\end{frame}
-
-\begin{frame}
-\begin{center}
-	{\Large How are polytopes related to LP?} \\
-	\vspace{0.3cm}
-	\emph{via an equivalent definition...} 
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Polytopes \& LP}
-A vector \( \mathbf{x} \) is called a \textbf{feasible solution} if it satisfies the linear constraints of the LP, i.e. if \( A \mathbf{x} \leq \mathbf{b} \) and \( \mathbf{x} \geq \mathbf{0} \).\\
-
-\vspace{0.3cm} The set \( P = \{ \mathbf{x} \geq \mathbf{0} : A\mathbf{x} \leq \mathbf{b} \}  \) of all feasible solutions is called a \textbf{polyhedron}. 
+\frametitle{The Fractional Perfect Matching Polytope}
+\textbf{Observtion 3:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x \geq 0 \) and \( Ax = 1 \), where \( A = (a_{ve})_{v \in V, e \in E}  \) is the incidence matrix of \( G \).}\\
+\vspace{0.3cm}
+Define the \textbf{fractional perfect matching polytope} \( \mathcal{F} \mathcal{P}\mathcal{M} (G)  \) of a graph \( G \) by \[ \mathcal{FPM}(G) \coloneqq \{ x \in \mathbb{R}^{E} : x \geq 0 \mbox{ and } Ax = 1 \}.   \] Then, it follows from observation 3 that \( \mathcal{PM} (G) \subseteq \mathcal{FPM} (G) \).
 \begin{itemize}
-	\item Bounded polyhedra are called \textbf{polytopes}.
-	\item If the set of all feasible solutions to an LP is a polytope, then one of its corners is an optimum.
+	\item<2> \emph{This raises a natural question...} 
+	
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{The Big Picture}
-We would like to solve combinatorial optimization problems using algorithms.\\
+\begin{center}
+\Large Are there any graphs \( G \) with \( \mathcal{PM} (G) = \mathcal{FPM} (G) \)?
+\end{center}
+\end{frame}
 
-\vspace{0.3cm}
-Some examples:
+\begin{frame}
+\begin{center}
+	\Large Yes!
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large If \( G \) is \textbf{\alert{bipartite}}, then \( \mathcal{PM} (G) = \mathcal{FPM} (G) \).
+\end{center}
+\end{frame}
+
+\begin{frame}
+\textbf{Lemma 1:} \emph{Let \( A \) be the incidence matrix of a bipartite graph \( G \). Then \( A \) is totally unimodular; that is, every square submatrix \( B \) of \( A \) satisfies \( \det B \in \{ 0, \pm 1 \}  \).}
+\begin{proof}
+Let \( B \) be an \( m \times m \) submatrix of \( A \). The proof is by induction on \( m \). If \( m = 1 \) then clearly \( \det B \in \{ 0,1 \}  \), so fix \( m \geq 2 \).
 \begin{itemize}
-	\item Finding min-weight edge or vertex covers in graphs.
-	\item Finding (pure, mixed, correlated) Nash equilibria in games.
-	\item Finding max flows and min cuts in flow networks.
-	\item Finding min-weight perfect matchings in graphs.
+	\item If \( B \) has a column with at most one non-zero entry, then we may cofactor-expand along this column and use the IH to obtain \( \det B \in \{ 0, \pm 1 \}  \).
+	\item Otherwise, every column of \( B \) has exactly two non-zero entries. Since any two non-zero entries from the same column are in different partite sets, the sum of all rows pertaining to vertices from one partite set equals the sum of all rows from the other. So \( \det B = 0 \) since its rows are linearly dependent.
+	
 \end{itemize}
-\vspace{0.3cm}
-If we can reduce these problems to solving linear programs, we can leverage efficient LP solvers to obtain optimal solutions.
+\end{proof}
 \end{frame}
 
 \begin{frame}
-\begin{center}
-\Large This talk is about the connection between linear programming, polytopes, and perfect matchings.
-\end{center}
+	\textbf{Lemma 2:} \emph{If \( A \) is totally unimodular and \( b \) is a vector with integer components, then all corners of \( P = \{ x \geq 0 : Ax \leq b \}  \) have integer components.}
+\begin{proof}
+	The proof is long and somewhat off-topic. Given the time constraint, see section \( n \) \alert{here}.
+\end{proof}
 \end{frame}
 
 \begin{frame}
-\frametitle{Perfect Matchings}
-A \textbf{matching} in a simple graph \( G = (V,E) \) is a subset \( M \subseteq E \) of edges such that no two edges in \( M \) share an end. So every vertex \( v \in V \) is incident to \emph{at most} one edge in \( M \). \\
-
-\vspace{0.3cm}
-
-A matching \( M \) is \textbf{perfect} if every vertex \( v \in V \) is incident to \emph{exactly} one edge in \( M \). 
+	\textbf{Theorem:} \emph{If \( G \) is a bipartite graph, then \( \mathcal{PM} (G) = \mathcal{FPM} (G) \).}
+\begin{proof}
+We have already seen that \( \mathcal{PM} (G) \subseteq \mathcal{FPM} (G) \). From lemma 1, the incidence matrix \( A \) of \( G \) is totally unimodular; and so lemma 2 implies that every corner of \( \mathcal{FPM} (G) \) has integer components. 
+\end{proof}
 \end{frame}
 
-\begin{frame}
-\frametitle{Perfect Matchings}
-A perfect matching (red edges) in the Petersen graph:
-\begin{center}
-\includegraphics[scale=0.1]{/Users/jakeg/Desktop/Matching Polytope/images/peter-match.png}
-\end{center}
-\end{frame}
