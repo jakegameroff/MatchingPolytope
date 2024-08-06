@@ -3,12 +3,12 @@
 \begin{frame}
 \frametitle{Agenda} \textbf{Plan for today:} 
 \begin{itemize}
-	\item Quick review of linear programming \& polytopes
-	\item Fundamentals of matching theory
-	\item The perfect matching polytope
+	\item<2-> Quick review of linear programming \& polytopes
+	\item<3-> Fundamentals of matching theory
+	\item<4-> The perfect matching polytope
 		\begin{itemize}
-			\item Bipartite \& general graphs
-			\item Application to cubic graphs
+			\item<5-> Bipartite \& general graphs
+			\item<6-> Application to cubic graphs
 		\end{itemize}
 \end{itemize}
 \end{frame}
@@ -23,6 +23,7 @@
 \frametitle{Linear Programming}
 The goal of \textbf{linear programming} is to maximize (or minimize) a linear objective function subject to a collection of linear constraints. \\
 \vspace{0.3cm}
+\pause
 For example:
 \begin{align*}
 \text{maximize} \quad &z = 5x_1 + 3x_2 - 7x_3 \\
@@ -33,14 +34,11 @@ For example:
 \end{frame}
 
 \begin{frame}
-\frametitle{Linear Programming}
-The goal of \textbf{linear programming} is to maximize (or minimize) a linear objective function subject to a collection of linear constraints. \\
-\vspace{0.3cm}
-
-We can express this compactly using matrices:
+We can express a linear program (LP) compactly using matrices:
+\pause
 \begin{itemize}
-	\item Goal: Find a vector \( x \) such that \( c^{T} x \) is maximized and \( x \) satisfies the constraints \( A x \leq b \) and \( x \geq 0 \).
-	\item (\( x, c \in \mathbb{R}^{n}  \), \( A \in \mathbb{R}^{m \times n} \), and \( b \in \mathbb{R}^{m}  \))
+	\item<2-> Goal: Find a vector \( x \) such that \( c^{T} x \) is maximized and \( x \) satisfies the constraints \( A x \leq b \) and \( x \geq 0 \).
+	\item<3> (\( x, c \in \mathbb{R}^{n}  \), \( A \in \mathbb{R}^{m \times n} \), and \( b \in \mathbb{R}^{m}  \))
 \end{itemize}
 \end{frame}
 
@@ -53,7 +51,7 @@ We can express this compactly using matrices:
         \text{subject to} \quad & Ax \leq b \\
                                 & x \geq 0.
     \end{align*}
-
+    \pause
     The dual LP is formulated as:
     \begin{align*}
         \text{minimize} \quad & b^T y \\
@@ -79,11 +77,11 @@ A \textbf{polytope} is the convex hull of a finite collection of vectors.
         \begin{minipage}{0.32\textwidth}
             \centering
             \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/convexhull.png}
-        \end{minipage}\hfill
+        \end{minipage}\hfill\pause
         \begin{minipage}{0.32\textwidth}
             \centering
             \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/convex-polytope.png}
-        \end{minipage}\hfill
+        \end{minipage}\hfill\pause
         \begin{minipage}{0.32\textwidth}
             \centering
             \includegraphics[width=\linewidth]{/Users/jakeg/Desktop/Matching Polytope/images/600cell.png}
@@ -93,14 +91,9 @@ A \textbf{polytope} is the convex hull of a finite collection of vectors.
 
 \begin{frame}
 \begin{center}
-\Large How are polytopes related to LP?
-\end{center}
-\end{frame}
-
-\begin{frame}
-\begin{center}
 	{\Large How are polytopes related to LP?} \\
 	\vspace{0.3cm}
+	\pause
 	\emph{via an equivalent definition...} 
 \end{center}
 \end{frame}
@@ -108,25 +101,26 @@ A \textbf{polytope} is the convex hull of a finite collection of vectors.
 \begin{frame}
 \frametitle{Polytopes \& LP}
 A vector \( \mathbf{x} \) is called a \textbf{feasible solution} if it satisfies the linear constraints of the LP, i.e. if \( A \mathbf{x} \leq \mathbf{b} \) and \( \mathbf{x} \geq \mathbf{0} \).\\
-
+\pause
 \vspace{0.3cm} The set \( P = \{ \mathbf{x} \geq \mathbf{0} : A\mathbf{x} \leq \mathbf{b} \}  \) of all feasible solutions is called a \textbf{polyhedron}. 
 \begin{itemize}
-	\item Bounded polyhedra are called \textbf{polytopes}.
-	\item If the set of all feasible solutions to an LP is a polytope, then one of its corners is an optimum.
+	\item<3-> Bounded polyhedra are called \textbf{polytopes}.
+	\item<4-> If the set of all feasible solutions to an LP is a polytope, then one of its corners is an optimum.
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{The Big Picture}
 We would like to solve combinatorial optimization problems using algorithms.\\
-
+\pause
 \vspace{0.3cm}
 Some examples:
+\pause
 \begin{itemize}
-	\item Finding min-weight edge or vertex covers in graphs.
-	\item Finding (pure, mixed, correlated) Nash equilibria in games.
-	\item Finding max flows and min cuts in flow networks.
-	\item Finding min-weight perfect matchings in graphs.
+	\item Finding min-weight edge or vertex covers in graphs.\pause
+	\item Finding (pure, mixed, correlated) Nash equilibria in games. \pause
+	\item Finding max flows and min cuts in flow networks. \pause
+	\item Finding min-weight perfect matchings in graphs. \pause
 \end{itemize}
 \vspace{0.3cm}
 If we can reduce these problems to solving linear programs, we can leverage efficient LP solvers to obtain optimal solutions.
@@ -140,8 +134,8 @@ If we can reduce these problems to solving linear programs, we can leverage effi
 
 \begin{frame}
 \frametitle{Perfect Matchings}
-A \textbf{matching} in a simple graph \( G = (V,E) \) is a subset \( M \subseteq E \) of edges such that no two edges in \( M \) share an end. So every vertex \( v \in V \) is incident to \emph{at most} one edge in \( M \). \\
-
+A \textbf{matching} in a simple graph \( G = (V,E) \) is a subset \( M \subseteq E \) of edges such that no two edges in \( M \) share an end. \pause So every vertex \( v \in V \) is incident to \emph{at most} one edge in \( M \). \\
+\pause
 \vspace{0.3cm}
 
 A matching \( M \) is \textbf{perfect} if every vertex \( v \in V \) is incident to \emph{exactly} one edge in \( M \). 
