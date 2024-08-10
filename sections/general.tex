@@ -1,0 +1,56 @@
+%! TeX root: ../mpolytope.tex
+
+\begin{frame}
+\begin{center}
+\Large Can we extend this theory to \emph{general} graphs?
+\end{center}
+\end{frame}
+
+\begin{frame}{The General Case}
+	\textbf{Edmonds' Theorem.} \emph{For any graph \( G \), the polytope \( \mathcal{PM} (G) \) is precisely the set of vectors \( x \in \mathbb{R}^{E}  \) satisfying:} \pause
+	\begin{enumerate}
+		\item \( x \geq 0 \);\pause
+		\item \( x (\delta (v)) = \sum_{e \in \delta (v)}^{} x(e) = 1  \), for each \( v \in V \); \pause
+		\item \( x(\delta (X)) = \sum_{e \in \delta (X)}^{} x(e) \geq 1 \), for each odd subset \( X \subseteq V \). \pause
+	\end{enumerate}
+\begin{proof}
+Please see Theorem 5 {\color{blue!80}{\href{https://www.math.mcgill.ca/snorin/papers/lecture2.pdf}{here}}}.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large \textbf{Application: Perfect matchings in cubic (3-regular) graphs}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\vspace{0.3cm}
+\textbf{Theorem.} \emph{Every cubic bridgeless graph has a perfect matching.} \pause
+\begin{proof}
+It suffices to prove that its perfect matching polytope \( \mathcal{PM}(G) \) is non-empty. \pause Put \( x = (1/3 : e \in E). \) \pause Then \( x \geq 0 \), and since \( G \) is cubic, \( x(\delta (v)) = 3 \cdot 1/3 = 1. \) \pause Finally, fix an odd subset \( X \subseteq V \) and let \( \ell = |\delta (X)| \) be the number of edges leaving \( X \). \pause Then \[3|X| = \sum_{v \in X}^{} \deg v = 2 |E(X)| + \ell. \] \pause Now observe that \( 3|X| \) is odd and \( 2|E(X)| \) is even, so \( \ell \) is odd. \pause Further, \( \ell > 1 \) since \( G \) is bridgeless, and so \( \ell \geq 3 \). \pause Hence \[ x(\delta (X)) = \sum_{e \in \delta (X)}^{} x(e) = \ell / 3 \geq 1.   \] \pause
+
+By Edmonds' theorem, \(x = (\frac{1}{3} , \frac{1}{3} , \hdots ,\frac{1}{3} ) \in  \mathcal{PM} (G) \neq \emptyset  \).
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Large In fact, every \( d \)-regular, \( (d-1) \)-edge-connected graph has a perfect matching.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{tikzpicture}[remember picture, overlay]
+        \node [opacity=0.2] at (current page.center) {
+            \includegraphics[scale=0.28]{/Users/jakeg/Desktop/Matching Polytope/images/matches.jpg}
+        };
+\end{tikzpicture}
+\begin{center}
+	\vspace{2.5cm}
+	{\huge \textbf{Thanks for listening!} $\smiley$} \\
+	\Large Let me know if you have any questions! \pause
+\end{center}
+\vspace{1.8cm}
+References: We followed Lov\'asz and Plummers' book, ``Matching Theory" (1985), and used information from the notes linked {\color{blue!80}{\href{https://www.math.uvic.ca/~noelj/MA252.html}{here}}} (week 9) and {\color{blue!80}{\href{https://www.math.mcgill.ca/snorin/papers/lecture2.pdf}{here}}}.
+\end{frame}

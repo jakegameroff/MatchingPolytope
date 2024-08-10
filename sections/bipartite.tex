@@ -1,0 +1,219 @@
+%! TeX root: ../mpolytope.tex
+
+\begin{frame}
+\begin{center}
+\Large \textbf{The Perfect Matching Polytope} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Preliminaries}
+Let \( G = (V,E) \). We will work in the vector space \( \mathbb{R}^{E} \coloneqq \mathbb{R}^{|E|}  \).\pause
+\begin{itemize}
+	\item Vectors in \( \mathbb{R}^{E}  \) have components indexed by \( E \).\pause
+	\item E.g. \( x = (x(e) : e \in E) \in \mathbb{R}^{E} \). \pause
+\end{itemize}
+\vspace{0.3cm}
+As such, each component of a vector in \( \mathbb{R}^{E}  \) contains information about an edge \( e \in E \). \pause
+\begin{itemize}
+	\item E.g. If \( F \subseteq E \), define \( \chi_{F} \in \mathbb{R}^{E}  \) by \( \chi_{F}(e) = 1  \) if \( e \in M \) and \( \chi_{F} (e) = 0 \) otherwise.
+\end{itemize}
+\vspace{0.3cm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Preliminaries}
+We must cover one final preliminary:\pause \\
+\vspace{0.3cm}
+Given \( x \in \mathbb{R}^{E}  \) and \( F \subseteq E \), define \pause \[ x(F) \coloneqq x \cdot \chi_{F} = \sum_{e \in F}^{} x(e) .  \]
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+Let \( \mathcal{M}_{G}  \) denote the collection of perfect matchings of \( G \). Then, we define the \textbf{perfect matching polytope} \( \mathcal{P} \mathcal{M}  (G) \) of \( G \) by \pause \[ \mathcal{P} \mathcal{M} (G) \coloneqq \operatorname{conv} (\{ \chi_{M} \in \mathbb{R}^{E} : M \in \mathcal{M} _{G}  \} ), \] \pause where \( \operatorname{conv} (A) \) is the smallest convex set containing \( A \subseteq \mathbb{R}^{E}  \).
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+The set \( \mathcal{P} \mathcal{M} (G) = \operatorname{conv} (\{ \chi_{M} \in \mathbb{R}^{E} : M \in \mathcal{M} _{G}  \} ) \) doesn't seem to help us investigate the perfect matchings in \( G \).
+\begin{itemize}
+	\item<2-> By definition, \( \mathcal{P} \mathcal{M} (G) \) is a polytope, so it would be really nice if we could \emph{find a linear program} whose optimum occurs at one of its corners. 
+	\item<3> Let's do that now!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 1:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(e) \geq 0 \) for every \( e \in E \).} \pause
+\begin{proof}
+	We may write \( x \) as a convex combination of characteristic vectors of perfect matchings in \( G \): \[ x = \lambda_1 \chi_{M_1} + \lambda_2 \chi_{M_2} + \cdots + \lambda_{n} \chi_{M_{n} } . \] \pause Since \( \lambda_{j} \in [0, 1] \) and \( \chi_{M_{j} } \geq 0 \) for each \( j \in [n] \), it follows that \( x \) has non-negative components.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 2:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(\delta (v)) = 1 \) for all \( v \in V \).}\\
+\pause (\emph{note: \( \delta (X) \) is the set edges with exactly one end in \( X \)})\pause
+
+\begin{proof}
+Again, write \( x = \sum_{j=1}^{n} \lambda_{j} \chi_{M_{j} }  \) as a convex combination. Then \pause
+\begin{align*}
+	x(\delta (v)) &= \sum_{e \in \delta (v)}^{} x(e) = \sum_{e \in \delta (v)}^{} \sum_{j=1}^{n} \lambda_{j} \chi_{M_{j} } (e) \\
+		      &= \sum_{j=1}^{n} \sum_{e \in \delta (v)}^{} \lambda_{j} \chi_{M_{j} } (e) = \sum_{j=1}^{n} \lambda_{j} = 1,
+\end{align*}
+since each \( M_{j}  \) is a perfect matching.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Perfect Matching Polytope}
+\textbf{Observation 1:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(e) \geq 0 \) for every \( e \in E \).} \\
+\vspace{0.1cm}
+\textbf{Observation 2:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x(\delta (v)) = 1 \) for all \( v \in V \).}\\
+\vspace{0.5cm}
+Observations 1 and 2 can be written compactly as the following: \pause \\
+\vspace{0.1cm}
+\textbf{Observtion 3:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x \geq 0 \) and \( Ax = 1 \), where \( A = (a_{ve})_{v \in V, e \in E}  \) is the incidence matrix of \( G \).}
+\begin{itemize}
+	\item<3> \emph{This is really starting to look like a linear program...} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Fractional Perfect Matching Polytope}
+\textbf{Observtion 3:} \emph{If \( x \in \mathcal{P} \mathcal{M} (G) \), then \( x \geq 0 \) and \( Ax = 1 \), where \( A = (a_{ve})_{v \in V, e \in E}  \) is the incidence matrix of \( G \).}\\
+\vspace{0.3cm}
+Define the \textbf{fractional perfect matching polytope} \( \mathcal{F} \mathcal{P}\mathcal{M} (G)  \) of a graph \( G \) by \pause \[ \mathcal{FPM}(G) \coloneqq \{ x \in \mathbb{R}^{E} : x \geq 0 \mbox{ and } Ax = 1 \}.   \] \pause Then, it follows from observation 3 that \( \mathcal{PM} (G) \subseteq \mathcal{FPM} (G) \).
+\begin{itemize}
+	\item<2> \emph{This raises a natural question...} 
+	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Large Are there any graphs \( G \) with \( \mathcal{PM} (G) = \mathcal{FPM} (G) \)?
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large Yes!
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large If \( G \) is \textbf{\alert{bipartite}}, then \( \mathcal{PM} (G) = \mathcal{FPM} (G) \).
+\end{center}
+\end{frame}
+
+\begin{frame}
+\textbf{Lemma 1.} \emph{Let \( A \) be the incidence matrix of a bipartite graph \( G \). Then \( A \) is totally unimodular; that is, every square submatrix \( B \) of \( A \) satisfies \( \det B \in \{ 0, \pm 1 \}  \).}\pause
+\begin{proof}
+Let \( B \) be an \( m \times m \) submatrix of \( A \). The proof is by induction on \( m \). If \( m = 1 \) then clearly \( \det B \in \{ 0,1 \}  \), so fix \( m \geq 2 \).
+\begin{itemize}
+	\item<3-> If \( B \) has a column with only zeros, then \( \det B = 0 \).
+	\item<4-> If a column has exactly one non-zero entry, then we may cofactor-expand along this column and use the IH to obtain \( \det B \in \{ 0, \pm 1 \}  \).
+	\item<5-> Otherwise, every column of \( B \) has exactly two non-zero entries. Since any two non-zero entries from the same column are in different partite sets, the sum of all rows pertaining to vertices from one partite set equals the sum of all rows from the other. So \( \det B = 0 \) since its rows are linearly dependent.
+\end{itemize}
+\end{proof}
+\end{frame}
+
+\begin{frame}
+	\textbf{Lemma 2.} \emph{If \( A \) is totally unimodular and \( b \) is a vector with integer components, then all corners of \( P = \{ x \geq 0 : Ax \leq b \}  \) have integer components.}\pause
+\begin{proof}
+	The proof is long and somewhat off-topic. Given the time constraint, see week 8 from {\color{blue!80}{\href{https://www.math.uvic.ca/~noelj/MA252.html}{this webpage}}} for a careful and detailed consideration.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\textbf{Lemma 3.} \emph{If \( x \in \mathcal{FPM} (G) \) is integral, then \( x \in \mathcal{PM} (G) \).}\pause
+\begin{proof}
+We know that \( x(e) \geq 0 \) for each \( e \in E \) and \( \sum_{e \in \delta (v)}^{} x(e) = 1 \) for each \( v \in V \). \pause Since \( x \) is integral (i.e. has integer components), there is exactly one edge \( e \in \delta (v) \) with \( x(e) = 1 \). \pause Since this holds for each \( v \in V \), \( x \) is a characterstic vector of a perfect matching in \( G \). \pause So \( x \in \mathcal{PM} (G) \).
+\end{proof}
+\end{frame}
+
+\begin{frame}
+	\frametitle{The Bipartite Case}
+	\textbf{Theorem.} \emph{If \( G \) is a bipartite graph, then \( \mathcal{PM} (G) = \mathcal{FPM} (G) \).}\pause
+\begin{proof}
+We have already seen that \( \mathcal{PM} (G) \subseteq \mathcal{FPM} (G) \). \pause From Lemma 1, the incidence matrix \( A \) of \( G \) is totally unimodular; \pause and so Lemma 2 implies that every corner of \( \mathcal{FPM} (G) \) is integral. \pause Then, Lemma 3 implies that all corners of \( \mathcal{FPM} (G) \) are in \( \mathcal{PM} (G) \). \pause By the convexity of \( \mathcal{PM} (G) \), we conclude that \( \mathcal{FPM} (G) \subseteq \mathcal{PM} (G) \).
+\end{proof}
+\end{frame}
+
+\begin{frame}
+	\frametitle{The Bipartite Case}
+We can define the \textbf{matching polytope} of \( G \) analagously: \[ \mathcal{M} (G) \coloneqq \operatorname{conv} (\{ \chi_{M} : M \mbox{ is a matching in } G \} . \] \pause We can also define its fractional matching polytope: \[ \mathcal{FM} (G) \coloneqq \{ x \in \mathbb{R}^{E} : x \geq 0 \mbox{ and } Ax \leq 1 \}. \]
+\pause We have \( Ax \leq 1 \) (rather than \( Ax = 1 \)) because every vertex is incident to \emph{at most} 1 edge in a matching.
+\begin{itemize}
+	\item<2> By the exact same reasoning as before, \( \mathcal{M} (G) = \mathcal{FM} (G) \) whenever \( G \) is bipartite.
+	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Large At this point, you're probably thinking...
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large \emph{``Who cares? When am I ever gonna use this?"}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Large Well...
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	\Large We can use this to prove \alert{\textbf{K\"onig's Theorem}}! :)
+\end{center}
+\end{frame}
+
+\begin{frame}{K\"onig's Theorem}
+Let \( G = (V,E) \). Then, we define\pause
+\begin{itemize}
+	\item \( \nu (G) \coloneqq  \) max size of a matching in \( G \).\pause
+	\item \( \tau (G) \coloneqq \) min size of a vertex cover in \( G \).\pause
+\end{itemize}
+\vspace{0.3cm}
+Note that \( \nu (G) \leq \tau (G) \) for every graph \( G \). \pause Indeed, given a minimal vertex cover $X$ and any matching $M$, each edge in $M$ has an end in $X$. Since no two edges in $M$ share an end, $|M| \leq |X|$. \pause Consequently, $\nu (G) \leq \tau (G)$.
+\end{frame}
+
+\begin{frame}
+\textbf{K\"onig's Theorem.} The quantities \( \nu (G) = \tau (G) \) for every bipartite graph \( G \).\pause
+\begin{proof}\renewcommand{\qedsymbol}{}
+	From the previous theorem (and Lemmas 1-3), one of the corners of \[ \mathcal{M} (G) = \mathcal{FM} (G) = \{ x \in \mathbb{R}^{E} : x \geq 0 \mbox{ and } Ax \leq 1 \} \] gives \( \nu (G) \) as an optimum to the following (integral) LP:\pause
+\begin{align*}
+\text{maximize} \quad &z(x) = \sum_{e \in E}^{} x(e) \\
+\text{subject to} \quad & \sum_{e \in \delta (v)}^{} x(e)  \leq 1, \ \forall v \in V \\
+& x(e) \geq 0, \ \forall e \in E.
+\end{align*}
+(\emph{proof continues on next slide.})
+\end{proof}
+\end{frame}
+
+\begin{frame}
+Using a bit of algebra, one can check that the dual of the LP on the previous slide is: \pause
+\begin{align*}
+\text{minimize} \quad & \sum_{v \in V}^{} y(v)  \\
+\text{subject to} \quad & y(u) + y(v) \geq 1 , \ \forall uv \in E \\
+& y(v) \geq 0, \ \forall v \in V.
+\end{align*}
+\pause From the strong duality theorem, it follows that the dual has optimum value \( \nu (G) \). \pause But notice that by construction, the dual LP computes \( \tau (G) \), so \( \nu (G) = \tau (G) \).\pause \\
+\vspace{0.4cm}
+(Remark: the dual LP is integral. Indeed, the transpose of a totally unimodular matrix is totally unimodular, so Lemma 2 asserts the claim.) \qed
+\end{frame}
+
+\begin{frame}{The General Case}
+\textbf{Remark.} There are graphs with \(\mathcal{FPM} (G) \not\subseteq \mathcal{PM} (G) \). \pause
+\begin{proof}
+Consider any odd cycle \( C = (V,E) \). Define the vector \( c \in \mathbb{R}^{E}  \) given by \( c(e) = 1/2 \) for each \( e \in E \). \pause Then \( c \geq 0 \) and \[ c(\delta (v)) = \sum_{e \in \delta (v)}^{} c(e) = 1/2 + 1/2 = 1,  \] since each vertex in \( C \) has exactly two neighbours. \pause So \( c \in \mathcal{FPM} (C) \). But \( c \notin \mathcal{PM} (C) \), since \( \mathcal{PM} (C) = \emptyset   \).
+\end{proof}
+\end{frame}
